@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./PseudoRandomSquadGenerator.sol";
 
-contract SquadNFT is ERC721Enumerable, Ownable {
+contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
     constructor() ERC721("SquadNFT", "SQD") {
         tokenCounter = 0;
     }
@@ -15,12 +16,11 @@ contract SquadNFT is ERC721Enumerable, Ownable {
     uint256 private mintPrice = 5 ether;
 
     uint32 private tokenCounter;
-    mapping(uint32 => bytes8) tokenToSquad;
+    mapping(uint32 => bytes4) tokenToSquad;
 
-    function registerSquad(bytes8 squadComposition)
+    function registerSquad()
         public
         payable
-        validSquad(squadComposition)
     {
         if (msg.sender != owner()) {
             require(msg.value == mintPrice, "Error: Price not enough");
@@ -28,7 +28,7 @@ contract SquadNFT is ERC721Enumerable, Ownable {
         }
 
         _safeMint(msg.sender, tokenCounter);
-        tokenToSquad[tokenCounter] = squadComposition;
+        tokenToSquad[tokenCounter] = getPseudoRandomSquad();
         tokenCounter++;
     }
 
@@ -36,16 +36,9 @@ contract SquadNFT is ERC721Enumerable, Ownable {
         public
         view
         registeredSquad(player)
-        returns (bytes8)
+        returns (bytes4)
     {
         return tokenToSquad[uint32(tokenOfOwnerByIndex(player, 0))];
-    }
-
-    modifier validSquad(bytes8 squadComposition) {
-        for (uint8 i = 0; i < 5; i++) {
-            require(uint8(squadComposition[i]) <= 2, "Error: Squad not valid");
-        }
-        _;
     }
 
     modifier registeredSquad(address player) {
