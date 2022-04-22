@@ -14,6 +14,7 @@ export type { ERC165 } from "./ERC165";
 export type { IERC165 } from "./IERC165";
 export type { Dungeon } from "./Dungeon";
 export type { QuestExecution } from "./QuestExecution";
+export type { QuestManager } from "./QuestManager";
 export type { SquadNFT } from "./SquadNFT";
 
 export { Ownable__factory } from "./factories/Ownable__factory";
@@ -29,4 +30,5 @@ export { ERC165__factory } from "./factories/ERC165__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
 export { Dungeon__factory } from "./factories/Dungeon__factory";
 export { QuestExecution__factory } from "./factories/QuestExecution__factory";
+export { QuestManager__factory } from "./factories/QuestManager__factory";
 export { SquadNFT__factory } from "./factories/SquadNFT__factory";

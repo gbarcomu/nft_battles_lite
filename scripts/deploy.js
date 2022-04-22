@@ -16,16 +16,16 @@ async function main() {
   const SquadNFT = await hre.ethers.getContractFactory("SquadNFT");
   const squadNFT = await SquadNFT.deploy();
 
-  const Dungeon = await hre.ethers.getContractFactory("Dungeon");
+  const QuestManager = await hre.ethers.getContractFactory("QuestManager");
 
   await squadNFT.deployed();
 
   console.log("SquadNFT deployed to:", squadNFT.address);
 
-  const dungeon = await Dungeon.deploy(squadNFT.address);
-  await dungeon.deployed();
+  const questManager = await QuestManager.deploy(squadNFT.address);
+  await questManager.deployed();
 
-  console.log("Dungeon deployed to:", dungeon.address);
+  console.log("QuestManager deployed to:", questManager.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

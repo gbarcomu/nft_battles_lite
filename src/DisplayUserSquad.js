@@ -14,7 +14,7 @@ function DisplayUserSquad() {
         try {
             fetchSquad().then(data => {
                 console.log(data);
-                if(data !== null) {
+                if(data !== undefined && data !== null) {
                     setUserSquad(composeSquad(data));
                 }
                 else {

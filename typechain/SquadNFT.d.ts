@@ -30,7 +30,7 @@ interface SquadNFTInterface extends ethers.utils.Interface {
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "registerSquad(bytes8)": FunctionFragment;
+    "registerSquad()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
@@ -69,7 +69,7 @@ interface SquadNFTInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "registerSquad",
-    values: [BytesLike]
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -177,12 +177,14 @@ interface SquadNFTInterface extends ethers.utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "PlayerSquadComposition(bytes4)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PlayerSquadComposition"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -300,12 +302,10 @@ export class SquadNFT extends Contract {
     ): Promise<[string]>;
 
     registerSquad(
-      squadComposition: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "registerSquad(bytes8)"(
-      squadComposition: BytesLike,
+    "registerSquad()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -486,12 +486,10 @@ export class SquadNFT extends Contract {
   ): Promise<string>;
 
   registerSquad(
-    squadComposition: BytesLike,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "registerSquad(bytes8)"(
-    squadComposition: BytesLike,
+  "registerSquad()"(
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -668,15 +666,9 @@ export class SquadNFT extends Contract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    registerSquad(
-      squadComposition: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    registerSquad(overrides?: CallOverrides): Promise<void>;
 
-    "registerSquad(bytes8)"(
-      squadComposition: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    "registerSquad()"(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -808,6 +800,10 @@ export class SquadNFT extends Contract {
       { previousOwner: string; newOwner: string }
     >;
 
+    PlayerSquadComposition(
+      undefined: null
+    ): TypedEventFilter<[string], { arg0: string }>;
+
     Transfer(
       from: string | null,
       to: string | null,
@@ -889,12 +885,10 @@ export class SquadNFT extends Contract {
     ): Promise<BigNumber>;
 
     registerSquad(
-      squadComposition: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "registerSquad(bytes8)"(
-      squadComposition: BytesLike,
+    "registerSquad()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1082,12 +1076,10 @@ export class SquadNFT extends Contract {
     ): Promise<PopulatedTransaction>;
 
     registerSquad(
-      squadComposition: BytesLike,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "registerSquad(bytes8)"(
-      squadComposition: BytesLike,
+    "registerSquad()"(
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

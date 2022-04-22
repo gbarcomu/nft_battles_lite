@@ -18,6 +18,8 @@ contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
     uint32 private tokenCounter;
     mapping(uint32 => bytes4) tokenToSquad;
 
+    event PlayerSquadComposition(bytes4);
+
     function registerSquad()
         public
         payable
@@ -29,6 +31,7 @@ contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
 
         _safeMint(msg.sender, tokenCounter);
         tokenToSquad[tokenCounter] = getPseudoRandomSquad();
+        emit PlayerSquadComposition(tokenToSquad[tokenCounter]);
         tokenCounter++;
     }
 

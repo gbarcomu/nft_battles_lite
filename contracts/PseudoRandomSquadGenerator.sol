@@ -3,10 +3,9 @@ pragma solidity ^0.8.0;
 
 contract PseudoRandomSquadGenerator {
 
-    event PseudoRandomNumbers(bytes32, bytes32, bytes32, bytes32);
-
     function getPseudoRandomSquad()
         internal
+        view
         returns (
             bytes4
         )
@@ -26,7 +25,6 @@ contract PseudoRandomSquadGenerator {
             hashes[i] = keccak256(abi.encodePacked(hashes[i-1]));
             squad[i] = bytes1(uint8(uint256(hashes[i]) % MODULUS));
         }
-        emit PseudoRandomNumbers(hashes[0], hashes[1], hashes[2], hashes[3]);
         return (concatBytes(squad[0], squad[1], squad[2], squad[3]));
     }
 

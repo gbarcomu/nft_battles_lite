@@ -31,19 +31,20 @@ contract QuestExecution {
             uint8
         )
     {
+        bytes32[3] memory hashes;
         uint8[3] memory battles;
         uint8 MODULUS = 100;
-        for (uint8 i = 0; i < 3; i++) {
-            battles[i] = uint8(
-                uint256(
-                    keccak256(
+
+        hashes[0] = keccak256(
                         abi.encodePacked(
                             block.timestamp,
-                            blockhash(block.number - i - 1)
+                            blockhash(block.number)
                         )
-                    )
-                ) % MODULUS
-            );
+                    );
+        battles[0] = uint8(uint256(hashes[0]) % MODULUS);
+        for (uint8 i = 1; i < 3; i++) {
+            hashes[i] = keccak256(abi.encodePacked(hashes[i-1]));
+            battles[i] = uint8(uint256(hashes[i]) % MODULUS);
         }
         emit PseudoRandomNumbers(battles[0], battles[1], battles[2]);
         return (battles[0], battles[1], battles[2]);
