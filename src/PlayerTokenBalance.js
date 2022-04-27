@@ -8,17 +8,17 @@ function PlayerTokenBalance() {
     useEffect(() => {
         try {
             getPlayerLootTokens().then(data => {
-                setTokenBalance(<p>{data}</p>);
+                setTokenBalance(data);
             });
         }
         catch (err) {
-            setTokenBalance(<p>0</p>);
+            setTokenBalance(0);
         }
 
     }, []);
     return (
         <div>
-            Loot Tokens: {tokenBalance}
+            {tokenBalance}
         </div>
     );
 }
