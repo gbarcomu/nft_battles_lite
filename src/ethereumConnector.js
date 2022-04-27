@@ -1,10 +1,11 @@
 import { ethers } from 'ethers'
 import SquadNFT from './artifacts/contracts/SquadNFT.sol/SquadNFT.json'
 import QuestManager from './artifacts/contracts/QuestManager.sol/QuestManager.json'
+import LootToken from './artifacts/contracts/LootToken.sol/LootToken.json'
 import { toHexString, exportToJson } from './utils'
 
 const mintPrice = "5.0";
-const questPrice = "5.5";
+const mealPrice = "3.0";
 
 export async function loadEthereumAccount() {
     const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -60,7 +61,18 @@ export async function getPlayerRemainingTime() {
     } catch (err) {
         console.log(err)
     }
+}
 
+export async function getPlayerLootTokens() {
+    const account = await loadEthereumAccount();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(lootToken, LootToken.abi, provider);
+    try {
+        const data = await contract.balanceOf(account);
+        return data.toNumber();
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export async function fetchQuestStage() {
@@ -85,8 +97,8 @@ export async function playQuest() {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(questManagerAddress, QuestManager.abi, signer);
     try {
-        const transaction = await contract.playQuest({
-            gasLimit: 70000
+        const transaction = await contract.playQuest(lootToken, {
+            gasLimit: 160000
         });
         const txResult = await transaction.wait();
         return txResult;
@@ -95,6 +107,24 @@ export async function playQuest() {
         console.log(err)
     }
 }
+
+export async function removeBattleFatigue() {
+    await loadEthereumAccount();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(questManagerAddress, QuestManager.abi, signer);
+    try {
+        const transaction = await contract.removeBattleFatigue({
+            value: ethers.utils.parseEther(mealPrice)
+        });
+        const txResult = await transaction.wait();
+        return txResult;
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export async function resolveQuest() {
 }
 export async function startQuest() {
@@ -104,3 +134,4 @@ export const dungeonAddress = "0x";
 
 export const nftSquadAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
 export const questManagerAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+export const lootToken = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";

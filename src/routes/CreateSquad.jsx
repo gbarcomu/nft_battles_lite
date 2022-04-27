@@ -4,7 +4,9 @@ import Row from 'react-bootstrap/Row';
 import { Menu } from '../Menu';
 import { MintSquad } from '../MintSquad';
 import { PlayQuest } from '../PlayQuest';
+import { RemoveFatigue } from '../RemoveFatigue';
 import { Timer } from '../Timer';
+import { PlayerTokenBalance } from '../PlayerTokenBalance';
 import { useEffect, useState } from 'react';
 import { DisplayUserSquad } from '../DisplayUserSquad';
 import { getPlayerRemainingTime } from '../ethereumConnector.js';
@@ -41,6 +43,8 @@ export default function CreateSquad() {
           <Row>
             <MintSquad />
             <PlayQuest />
+            <RemoveFatigue />
+            <PlayerTokenBalance />
             <Timer remainingTime={count} />
             {count}
           </Row>

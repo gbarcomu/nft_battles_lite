@@ -5,7 +5,7 @@ import "./QuestExecution.sol";
 import "./SquadNFT.sol";
 import "./PseudoRandomSquadGenerator.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./LootTokens.sol";
+import "./LootToken.sol";
 
 contract QuestManager is QuestExecution, Ownable, PseudoRandomSquadGenerator {
 
@@ -40,7 +40,7 @@ contract QuestManager is QuestExecution, Ownable, PseudoRandomSquadGenerator {
 
         bool playerWins = executeQuest(playerSquad, enemySquad);
         emit IsPlayerWinner(playerWins);
-        LootTokens(lootTokenAddress).mintTokens(msg.sender, playerWins == true ? winPrize : losePrize);
+        LootToken(lootTokenAddress).mintTokens(msg.sender, playerWins == true ? winPrize : losePrize);
         questPlayedTimestamp[msg.sender] = block.timestamp;
     }
 

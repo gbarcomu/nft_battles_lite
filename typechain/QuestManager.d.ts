@@ -12,6 +12,7 @@ import {
   Contract,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
@@ -23,9 +24,12 @@ interface QuestManagerInterface extends ethers.utils.Interface {
   functions: {
     "getRemainingTime(address)": FunctionFragment;
     "owner()": FunctionFragment;
-    "playQuest()": FunctionFragment;
+    "pendingWithdrawal()": FunctionFragment;
+    "playQuest(address)": FunctionFragment;
+    "removeBattleFatigue()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "withdraw()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -33,7 +37,15 @@ interface QuestManagerInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "playQuest", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "pendingWithdrawal",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "playQuest", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "removeBattleFatigue",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -42,13 +54,22 @@ interface QuestManagerInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(
     functionFragment: "getRemainingTime",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "pendingWithdrawal",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "playQuest", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "removeBattleFatigue",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -57,6 +78,7 @@ interface QuestManagerInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "BattleWinners(bool,bool,bool)": EventFragment;
@@ -133,12 +155,26 @@ export class QuestManager extends Contract {
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
 
+    pendingWithdrawal(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "pendingWithdrawal()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     playQuest(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "playQuest()"(
+    "playQuest(address)"(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    removeBattleFatigue(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "removeBattleFatigue()"(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
@@ -158,6 +194,14 @@ export class QuestManager extends Contract {
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    withdraw(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdraw()"(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   getRemainingTime(
@@ -174,12 +218,26 @@ export class QuestManager extends Contract {
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
 
+  pendingWithdrawal(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "pendingWithdrawal()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   playQuest(
+    lootTokenAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "playQuest()"(
+  "playQuest(address)"(
+    lootTokenAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  removeBattleFatigue(
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "removeBattleFatigue()"(
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
@@ -200,6 +258,14 @@ export class QuestManager extends Contract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  withdraw(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdraw()"(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     getRemainingTime(
       playerAddress: string,
@@ -215,9 +281,23 @@ export class QuestManager extends Contract {
 
     "owner()"(overrides?: CallOverrides): Promise<string>;
 
-    playQuest(overrides?: CallOverrides): Promise<void>;
+    pendingWithdrawal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "playQuest()"(overrides?: CallOverrides): Promise<void>;
+    "pendingWithdrawal()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    playQuest(
+      lootTokenAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "playQuest(address)"(
+      lootTokenAddress: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    removeBattleFatigue(overrides?: CallOverrides): Promise<void>;
+
+    "removeBattleFatigue()"(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -232,6 +312,10 @@ export class QuestManager extends Contract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    withdraw(overrides?: CallOverrides): Promise<void>;
+
+    "withdraw()"(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -289,12 +373,26 @@ export class QuestManager extends Contract {
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    pendingWithdrawal(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "pendingWithdrawal()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     playQuest(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "playQuest()"(
+    "playQuest(address)"(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    removeBattleFatigue(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "removeBattleFatigue()"(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     renounceOwnership(
@@ -312,6 +410,14 @@ export class QuestManager extends Contract {
 
     "transferOwnership(address)"(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    withdraw(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "withdraw()"(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -331,12 +437,28 @@ export class QuestManager extends Contract {
 
     "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    pendingWithdrawal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "pendingWithdrawal()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     playQuest(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "playQuest()"(
+    "playQuest(address)"(
+      lootTokenAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    removeBattleFatigue(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "removeBattleFatigue()"(
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
@@ -354,6 +476,14 @@ export class QuestManager extends Contract {
 
     "transferOwnership(address)"(
       newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdraw(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdraw()"(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
