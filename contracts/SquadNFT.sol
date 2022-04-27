@@ -11,11 +11,12 @@ import "./PseudoRandomSquadGenerator.sol";
 contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
     constructor() ERC721("SquadNFT", "SQD") {
         tokenCounter = 0;
+        pendingWithdrawal = 0;
     }
 
     uint256 private mintPrice = 5 ether;
-
     uint32 private tokenCounter;
+    uint256 public pendingWithdrawal;
     mapping(uint32 => bytes4) tokenToSquad;
 
     event PlayerSquadComposition(bytes4);
@@ -26,7 +27,7 @@ contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
     {
         if (msg.sender != owner()) {
             require(msg.value == mintPrice, "Error: Price not enough");
-            payable(owner()).transfer(mintPrice);
+            pendingWithdrawal += msg.value;
         }
 
         _safeMint(msg.sender, tokenCounter);
@@ -42,6 +43,12 @@ contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
         returns (bytes4)
     {
         return tokenToSquad[uint32(tokenOfOwnerByIndex(player, 0))];
+    }
+
+    function withdraw() public onlyOwner {
+        uint256 amount = pendingWithdrawal;
+        pendingWithdrawal = 0;
+        payable(msg.sender).transfer(amount);
     }
 
     modifier registeredSquad(address player) {
