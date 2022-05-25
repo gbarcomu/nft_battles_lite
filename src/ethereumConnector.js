@@ -16,6 +16,38 @@ export async function loadEthereumAccount() {
     return account;
 }
 
+export async function loadEthereumChainId() {
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' })
+    console.log("hola");
+    console.log(chainId);
+    return chainId;
+}
+
+export async function switchNetwork() {
+    try {
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x539' }],
+        });
+    } catch (switchError) {
+        if (switchError.code === 4902) {
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [
+                        {
+                            chainId: '0x539',
+                            chainName: '...',
+                            rpcUrls: ['http://localhost:8545'] /* ... */,
+                        },
+                    ],
+                });
+            } catch (addError) {
+            }
+        }
+    }
+}
+
 export async function mintSquad() {
 
     await loadEthereumAccount();

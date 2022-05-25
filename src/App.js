@@ -5,8 +5,15 @@ import { Menu } from './Menu';
 import { PlayQuest } from './PlayQuest';
 import { DisplayUserSquad } from './DisplayUserSquad';
 import { FeedSquad } from './FeedSquad';
+import { loadEthereumChainId, switchNetwork } from './ethereumConnector.js';
+import { useEffect } from 'react';
 
 export default function App() {
+
+  useEffect(() => {
+    loadEthereumChainId();
+    switchNetwork();
+  }, []);
 
   return (
     <div>
