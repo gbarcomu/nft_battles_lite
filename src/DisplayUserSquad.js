@@ -2,28 +2,42 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Badge from 'react-bootstrap/Badge';
+import { MintSquad } from './MintSquad';
 
 import { fetchSquad } from './ethereumConnector.js';
 import { useEffect, useState } from 'react';
 
 function DisplayUserSquad() {
 
-    const [userSquad, setUserSquad] = useState()
+    const [userSquad, setUserSquad] = useState();
+
+    const [mintButton, setMintButton] = useState();
 
     useEffect(() => {
         try {
             fetchSquad().then(data => {
                 console.log(data);
-                if(data !== undefined && data !== null) {
+                if (data !== undefined && data !== null) {
                     setUserSquad(composeSquad(data));
                 }
                 else {
-                    setUserSquad(<p>You have no squad minted yet!</p>);
+                    setUserSquad(
+                        <div>
+                            <Image src="/img/blacksmith.png" fluid />
+                        </div>
+                    );
+                    setMintButton(<MintSquad />)
                 }
             });
         }
         catch (err) {
-            setUserSquad(<p>You have no squad minted yet!</p>);
+            setUserSquad(
+                <div>
+                    <Image src="/img/blacksmith.png" fluid />
+                </div>
+            );
+            setMintButton(<MintSquad />)
         }
 
     }, []);
@@ -42,18 +56,21 @@ function DisplayUserSquad() {
                 return ''
             }
         })
-        return imgSquad;
+        return imgSquad.slice(0, -1);
     }
 
     return (
         <Container>
             <Row>
-            <h5 class="pt-4"> My squad units:</h5>
-            <Col></Col>
-            <Col xs={12} sm={10} md={8}>
-            {userSquad}
-            </Col>
-            <Col></Col>
+                <center><h5 class="pt-4"> Barracks</h5></center>
+                <Col></Col>
+                <Col xs={12} sm={10} md={8}>
+                    {userSquad}
+                </Col>
+                <Col></Col>
+            </Row>
+            <Row>
+                {mintButton}
             </Row>
         </Container>
     )

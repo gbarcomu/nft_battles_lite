@@ -1,28 +1,47 @@
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import { playQuest } from './ethereumConnector.js';
+import { playQuest, getPlayerRemainingTime, fetchSquad } from './ethereumConnector.js';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
-import { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Badge from 'react-bootstrap/Badge';
+import { Timer } from './Timer';
+import { useEffect, useState } from 'react';
 
 function PlayQuest() {
 
-  async function handleClick(event) {
+  const [playButton, setPlayButton] = useState();
 
-    event.preventDefault();
+  useEffect(() => {
+    fetchSquad().then(data => {
+      if (data == undefined || data == null) {
+        setPlayButton(<Button variant="dark" onClick={handleClick} disabled>You need to mint a squad first</Button>);
+      }
+      else {
+        getPlayerRemainingTime().then((val) => {
+          val = val == undefined ? 0 : val.toNumber();
+          if (val != 0) {
+            setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Your squad is faitgued and need to rest for <Timer /> seconds</Button>)
+          }
+          else {
+            setPlayButton(<Button variant="dark" onClick={handleClick}>Play</Button>)
+          }
+        });
+      }
+    })
+  }, []);
+
+  async function handleClick() {
 
     try {
       playQuest().then(val => {
         setBattleResult({
-        playerSquad : [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
-        enemySquad : [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
-        battleNumbers : [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
-        battleWinners : [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
-        isPlayerWinner : [val.logs[4].data.substr(65, 1)]
+          playerSquad: [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
+          enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
+          battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
+          battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
+          isPlayerWinner: [val.logs[4].data.substr(65, 1)]
         });
         handleShow();
       });
@@ -33,36 +52,39 @@ function PlayQuest() {
   }
 
   function numToImg(index) {
-  const characters = [<Image src="/img/swordsman.png" fluid />,
-        <Image src="/img/lancer.png" fluid />,
-        <Image src="/img/knight.png" fluid />];
-  return(
-    <Row>
-    <Col></Col>
-    <Col xs={10} sm={8} md={6}>
-    {characters[parseInt(index)]}
-    </Col>
-    <Col></Col>
-    </Row>
+    const characters = [<Image src="/img/swordsman.png" fluid />,
+    <Image src="/img/lancer.png" fluid />,
+    <Image src="/img/knight.png" fluid />];
+    return (
+      <Row>
+        <Col></Col>
+        <Col xs={10} sm={8} md={6}>
+          {characters[parseInt(index)]}
+        </Col>
+        <Col></Col>
+      </Row>
     );
   }
 
   const [battleResult, setBattleResult] = useState({
-    playerSquad: [-1,-1,-1],
-    enemySquad: [-1,-1,-1],
-    battleNumbers: [-1,-1,-1],
-    battleWinners: [-1,-1,-1],
+    playerSquad: [-1, -1, -1],
+    enemySquad: [-1, -1, -1],
+    battleNumbers: [-1, -1, -1],
+    battleWinners: [-1, -1, -1],
     isPlayerWinner: -1
   });
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    window.location.reload();
+  }
   const handleShow = () => setShow(true);
 
   return (
-    <Container>
-      <Button variant="secondary" onClick={handleClick}>Play</Button>
+    <div className="d-grid">
+      {playButton}
 
 
       <Modal show={show} onHide={handleClose}>
@@ -102,18 +124,18 @@ function PlayQuest() {
               </tr>
             </tbody>
           </Table>
-
+          <div className="d-grid">
           <Badge bg={battleResult.isPlayerWinner == "1" ? "success" : "danger"}>
-          {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
+            {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
           </Badge>
+          </div>
 
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Close</Button>
         </Modal.Footer>
       </Modal>
-
-    </Container>
+    </div>
   )
 }
 

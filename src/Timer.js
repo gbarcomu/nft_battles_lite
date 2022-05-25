@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
+import { getPlayerRemainingTime } from './ethereumConnector';
 
-function Timer(props) {
-    const [counter, setCounter] = useState(props.remainingTime);
+function Timer() {
+    const [counter, setCounter] = useState(1);
 
     useEffect(() => {
         let timer;
         getPlayerRemainingTime().then((val) => {
-            // El timer se setea asincronamente, cambiara cuando se complete la promesa
+            val = val == undefined ? 0 : val.toNumber();
             setCounter(val);
-            timer = counter > 0 && setInterval(() => setCounter((prevCounter) => prevCounter - 1), 1000); // Usar el valor previo
+            timer = counter > 0 && setInterval(() => setCounter((prevCounter) => 
+            {
+                if(prevCounter == 0) {
+                    window.location.reload();
+                }
+                return prevCounter > 0 ? prevCounter - 1 : 0;
+            }), 1000);
         });
         return () => timer && clearInterval(timer);
-    }, []); // Sin dependecias para que solo se lance en el mount
+    }, []);
 
-    return <div>Countdown: {counter}</div>;
+    return counter;
 }
 
 export { Timer }

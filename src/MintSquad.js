@@ -1,12 +1,9 @@
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { mintSquad } from './ethereumConnector.js';
 
 function MintSquad() {
 
-  async function handleClick(event) {
-
-    event.preventDefault();
+  async function handleClick() {
 
     try {
       mintSquad();
@@ -17,9 +14,7 @@ function MintSquad() {
   }
 
   return (
-    <Container>
-      <Button variant="secondary" onClick={handleClick}>Mint</Button>
-    </Container>
+    <Button variant="dark" onClick={handleClick}>Mint a squad to play!</Button>
   )
 }
 

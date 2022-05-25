@@ -2,13 +2,17 @@ import { ethers } from 'ethers'
 import SquadNFT from './artifacts/contracts/SquadNFT.sol/SquadNFT.json'
 import QuestManager from './artifacts/contracts/QuestManager.sol/QuestManager.json'
 import LootToken from './artifacts/contracts/LootToken.sol/LootToken.json'
-import { toHexString, exportToJson } from './utils'
 
 const mintPrice = "5.0";
-const mealPrice = "3.0";
+const mealPrice = "1.0";
+
+export async function loadEthereumRequestAccount() {
+    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    return account;
+}
 
 export async function loadEthereumAccount() {
-    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const [account] = await window.ethereum.request({ method: 'eth_accounts' })
     return account;
 }
 
@@ -24,7 +28,7 @@ export async function mintSquad() {
             value: ethers.utils.parseEther(mintPrice)
         });
         await transaction.wait();
-        console.log(`Squad successfully registered`);
+        window.location.reload();
     }
     catch (err) {
         console.error(err);
@@ -75,20 +79,10 @@ export async function getPlayerLootTokens() {
     }
 }
 
-export async function fetchQuestStage() {
+export async function getRemainingTime() {
 }
 
-export async function getRemainingTime() {
-    // await loadEthereumAccount();
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const contract = new ethers.Contract(dungeonAddress, Dungeon.abi, provider);
-    // try {
-    //     const stage = await contract.getRemainingTime();
-    //     return stage;
-    // } catch (err) {
-    //     console.log(err)
-    // }
-
+export async function fetchQuestStage() {
 }
 
 export async function playQuest() {
@@ -117,8 +111,8 @@ export async function removeBattleFatigue() {
         const transaction = await contract.removeBattleFatigue({
             value: ethers.utils.parseEther(mealPrice)
         });
-        const txResult = await transaction.wait();
-        return txResult;
+        await transaction.wait();
+        window.location.reload();
 
     } catch (err) {
         console.log(err)

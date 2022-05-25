@@ -14,7 +14,7 @@ contract QuestExecution {
         (battles[0], battles[1], battles[2]) = getPseudoRandomNumbers();
         for (uint8 i = 0; i < 3; i++) {
             winners[i] =
-                battles[i] < winningOddsCalculator(playerSquad[i], gmSquad[i]);
+                battles[i] >= winningOddsCalculator(playerSquad[i], gmSquad[i]);
         }
         emit BattleWinners(winners[0], winners[1], winners[2]);
         return ((winners[0] ? 1 : 0) +
@@ -56,8 +56,8 @@ contract QuestExecution {
         returns (uint8)
     {
         uint8 NEUTRAL_FIGHT = 50;
-        uint8 FAVOURABLE_FIGHT = 70;
-        uint8 UNFAVOURABLE_FIGHT = 30;
+        uint8 FAVOURABLE_FIGHT = 30;
+        uint8 UNFAVOURABLE_FIGHT = 70;
 
         uint8 pU = uint8(playerUnit);
         uint8 gmU = uint8(gmUnit);

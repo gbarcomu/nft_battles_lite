@@ -18,7 +18,7 @@ function PlayerTokenBalance() {
     }, []);
     return (
         <div>
-            {tokenBalance}
+            Gold: {tokenBalance}
         </div>
     );
 }
