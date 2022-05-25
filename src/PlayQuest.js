@@ -25,7 +25,7 @@ function PlayQuest() {
             setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Your squad is faitgued and need to rest for <Timer /> seconds</Button>)
           }
           else {
-            setPlayButton(<Button variant="dark" onClick={handleClick}>Play</Button>)
+            setPlayButton(<Button variant="dark" onClick={handleClick}>Start battle!</Button>)
           }
         });
       }
