@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Badge from 'react-bootstrap/Badge';
 import { MintSquad } from './MintSquad';
 
 import { fetchSquad } from './ethereumConnector.js';

@@ -15,13 +15,13 @@ function PlayQuest() {
 
   useEffect(() => {
     fetchSquad().then(data => {
-      if (data == undefined || data == null) {
+      if (data === undefined || data === null) {
         setPlayButton(<Button variant="dark" onClick={handleClick} disabled>You need to mint a squad first</Button>);
       }
       else {
         getPlayerRemainingTime().then((val) => {
-          val = val == undefined ? 0 : val.toNumber();
-          if (val != 0) {
+          val = val === undefined ? 0 : val.toNumber();
+          if (val !== 0) {
             setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Your squad is faitgued and need to rest for <Timer /> seconds</Button>)
           }
           else {
@@ -30,26 +30,26 @@ function PlayQuest() {
         });
       }
     })
-  }, []);
 
-  async function handleClick() {
+    async function handleClick() {
 
-    try {
-      playQuest().then(val => {
-        setBattleResult({
-          playerSquad: [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
-          enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
-          battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
-          battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
-          isPlayerWinner: [val.logs[4].data.substr(65, 1)]
+      try {
+        playQuest().then(val => {
+          setBattleResult({
+            playerSquad: [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
+            enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
+            battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
+            battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
+            isPlayerWinner: [val.logs[4].data.substr(65, 1)]
+          });
+          handleShow();
         });
-        handleShow();
-      });
+      }
+      catch (err) {
+        console.error(err);
+      }
     }
-    catch (err) {
-      console.error(err);
-    }
-  }
+  }, []);
 
   function numToImg(index) {
     const characters = [<Image src="/img/swordsman.png" fluid />,
@@ -107,27 +107,27 @@ function PlayQuest() {
               <tr>
                 <td>{numToImg(battleResult.playerSquad[0])}</td>
                 <td>{battleResult.battleNumbers[0]}</td>
-                <td>{battleResult.battleWinners[0] == "1" ? "Player" : "Enemy"}</td>
+                <td>{battleResult.battleWinners[0] === "1" ? "Player" : "Enemy"}</td>
                 <td>{numToImg(battleResult.enemySquad[0])}</td>
               </tr>
               <tr>
                 <td>{numToImg(battleResult.playerSquad[1])}</td>
                 <td>{battleResult.battleNumbers[1]}</td>
-                <td>{battleResult.battleWinners[1] == "1" ? "Player" : "Enemy"}</td>
+                <td>{battleResult.battleWinners[1] === "1" ? "Player" : "Enemy"}</td>
                 <td>{numToImg(battleResult.enemySquad[1])}</td>
               </tr>
               <tr>
                 <td>{numToImg(battleResult.playerSquad[2])}</td>
                 <td>{battleResult.battleNumbers[2]}</td>
-                <td>{battleResult.battleWinners[2] == "1" ? "Player" : "Enemy"}</td>
+                <td>{battleResult.battleWinners[2] === "1" ? "Player" : "Enemy"}</td>
                 <td>{numToImg(battleResult.enemySquad[2])}</td>
               </tr>
             </tbody>
           </Table>
           <div className="d-grid">
-          <Badge bg={battleResult.isPlayerWinner == "1" ? "success" : "danger"}>
-            {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
-          </Badge>
+            <Badge bg={battleResult.isPlayerWinner == "1" ? "success" : "danger"}>
+              {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
+            </Badge>
           </div>
 
         </Modal.Body>

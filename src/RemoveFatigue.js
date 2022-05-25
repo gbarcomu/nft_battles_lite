@@ -8,8 +8,8 @@ function RemoveFatigue() {
 
   useEffect(() => {
     getPlayerRemainingTime().then((val) => {
-      val = val == undefined ? 0 : val.toNumber();
-      if (val != 0) {
+      val = val === undefined ? 0 : val.toNumber();
+      if (val !== 0) {
         setFeedButton(<Button variant="dark" onClick={handleClick}>Buy a meal for your squad!</Button>)
       }
     });

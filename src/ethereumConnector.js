@@ -79,12 +79,6 @@ export async function getPlayerLootTokens() {
     }
 }
 
-export async function getRemainingTime() {
-}
-
-export async function fetchQuestStage() {
-}
-
 export async function playQuest() {
     await loadEthereumAccount();
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -118,13 +112,6 @@ export async function removeBattleFatigue() {
         console.log(err)
     }
 }
-
-export async function resolveQuest() {
-}
-export async function startQuest() {
-}
-export const dungeonAddress = "0x";
-
 
 export const nftSquadAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
 export const questManagerAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
