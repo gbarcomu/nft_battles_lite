@@ -21,7 +21,7 @@ function Timer() {
         return () => timer && clearInterval(timer);
     }, []);
 
-    return counter;
+    return new Date(counter * 1000).toISOString().slice(14, 19);
 }
 
 export { Timer }

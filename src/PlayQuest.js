@@ -134,8 +134,8 @@ function PlayQuest() {
             </tbody>
           </Table>
           <div className="d-grid">
-            <Badge bg={battleResult.isPlayerWinner == "1" ? "success" : "danger"}>
-              {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
+            <Badge bg={battleResult.isPlayerWinner ? "success" : "danger"}>
+              {battleResult.isPlayerWinner ? "Player Wins!" : "Enemy Wins"}
             </Badge>
             <center><h5>
             <Figure>
@@ -145,7 +145,7 @@ function PlayQuest() {
                 src="/img/treasure-chest.png"
               />
             </Figure>
-            &emsp;Reward: {battleResult.isPlayerWinner == "1" ? "80" : "20"} Gold</h5></center>
+            &emsp;Reward: {battleResult.isPlayerWinner ? "80" : "20"} Gold</h5></center>
           </div>
 
         </Modal.Body>

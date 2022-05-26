@@ -15,7 +15,6 @@ function DisplayUserSquad() {
     useEffect(() => {
         try {
             fetchSquad().then(data => {
-                console.log(data);
                 if (data !== undefined && data !== null) {
                     setUserSquad(
                         <Col xs={10} sm={8} md={6}>
@@ -51,7 +50,7 @@ function DisplayUserSquad() {
 
         const imgSquad = bytesSquad.split("").slice(2, 12).map((e, i) => {
             if (i % 2 !== 0) {
-                return characters[e]
+                return <div key={i} > {characters[e]} </div>
             }
             else {
                 return ''
@@ -61,7 +60,7 @@ function DisplayUserSquad() {
     }
 
     return (
-        <div class="p-4">
+        <div className="p-4">
             <Row>
                 <center><h5> Barracks</h5></center>
                 <Col></Col>

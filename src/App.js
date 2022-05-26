@@ -15,6 +15,10 @@ export default function App() {
     switchNetwork();
   }, []);
 
+  window.ethereum.on('networkChanged', function(){
+    window.location.reload();
+  });
+
   return (
     <div>
       <Menu />

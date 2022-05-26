@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { mintSquad } from './ethereumConnector.js';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function MintSquad() {
 

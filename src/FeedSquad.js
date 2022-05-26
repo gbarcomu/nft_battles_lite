@@ -6,7 +6,7 @@ import { RemoveFatigue } from './RemoveFatigue';
 function FeedSquad() {
 
     return (
-        <div class="p-4">
+        <div className="p-4">
             <Row>
                 <center><h5> Inn</h5></center>
                 <Col></Col>

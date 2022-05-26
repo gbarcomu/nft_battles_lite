@@ -4,14 +4,17 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
 import { PlayerTokenBalance } from './PlayerTokenBalance';
-import { HowToPlay } from './HowToPlay'
+import { HowToPlay } from './HowToPlay';
+import { CHAIN_ID } from './Constants';
 
-import { loadEthereumAccount, loadEthereumRequestAccount } from './ethereumConnector.js';
+import { loadEthereumAccount, loadEthereumRequestAccount, loadEthereumChainId } from './ethereumConnector.js';
 
 
 function Menu() {
 
   const [userAddress, setUserAddress] = useState();
+
+  const [currentChain, setCurrentChain] = useState();
 
   async function loadAddress() {
     const account = await loadEthereumRequestAccount();
@@ -26,6 +29,24 @@ function Menu() {
         }
         else {
           setUserAddress(<Button variant="light" onClick={loadAddress}>Load Address</Button>);
+        }
+      });
+      loadEthereumChainId().then(chainid => {
+        if (chainid === CHAIN_ID) {
+          setCurrentChain(
+            <img
+              src="/img/polygon.png"
+              width="40"
+              height="40"
+              className="d-inline-block align-top"
+              alt="gold icon"
+            />)
+        }
+        else {
+          setCurrentChain(
+            <Navbar.Text>
+              not supported, please switch to Polygon
+            </Navbar.Text>)
         }
       });
     }
@@ -48,6 +69,12 @@ function Menu() {
           <Navbar.Text>
             <PlayerTokenBalance />
           </Navbar.Text>
+        </Nav>
+        <Nav>
+          <Navbar.Text>
+            Network:&ensp;
+          </Navbar.Text>
+          {currentChain}
         </Nav>
         <Nav>
           <HowToPlay />

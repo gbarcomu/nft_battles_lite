@@ -12,7 +12,7 @@ contract QuestManager is QuestExecution, Ownable, PseudoRandomSquadGenerator {
     SquadNFT squadNFT;
 
     uint256 private mealPrice = 1 ether;
-    uint256 private battleFatigue = 1 minutes;
+    uint256 private battleFatigue = 2 minutes;
     uint256 public pendingWithdrawal;
 
     uint256 private losePrize = 20;
