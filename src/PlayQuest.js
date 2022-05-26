@@ -37,14 +37,16 @@ function PlayQuest() {
 
       try {
         playQuest().then(val => {
-          setBattleResult({
-            playerSquad: [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
-            enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
-            battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
-            battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
-            isPlayerWinner: [val.logs[4].data.substr(65, 1)]
-          });
-          handleShow();
+          if (val.logs !== undefined) {
+            setBattleResult({
+              playerSquad: [val.logs[0].data.substr(2, 2), val.logs[0].data.substr(4, 2), val.logs[0].data.substr(6, 2)],
+              enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
+              battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
+              battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
+              isPlayerWinner: [val.logs[4].data.substr(65, 1)]
+            });
+            handleShow();
+          }
         });
         setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Start battle!&emsp;
         <Spinner
@@ -138,13 +140,13 @@ function PlayQuest() {
               {battleResult.isPlayerWinner ? "Player Wins!" : "Enemy Wins"}
             </Badge>
             <center><h5>
-            <Figure>
-              <Figure.Image
-                width={60}
-                alt="treasure chest"
-                src="/img/treasure-chest.png"
-              />
-            </Figure>
+              <Figure>
+                <Figure.Image
+                  width={60}
+                  alt="treasure chest"
+                  src="/img/treasure-chest.png"
+                />
+              </Figure>
             &emsp;Reward: {battleResult.isPlayerWinner ? "80" : "20"} Gold</h5></center>
           </div>
 

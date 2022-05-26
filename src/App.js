@@ -18,6 +18,9 @@ export default function App() {
   window.ethereum.on('networkChanged', function(){
     window.location.reload();
   });
+  window.ethereum.on('disconnect', function(){
+    // TODO
+  });
 
   return (
     <div>
