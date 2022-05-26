@@ -3,9 +3,11 @@ import { playQuest, getPlayerRemainingTime, fetchSquad } from './ethereumConnect
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
+import Spinner from 'react-bootstrap/Spinner';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Badge from 'react-bootstrap/Badge';
+import Figure from 'react-bootstrap/Figure';
 import { Timer } from './Timer';
 import { useEffect, useState } from 'react';
 
@@ -44,6 +46,14 @@ function PlayQuest() {
           });
           handleShow();
         });
+        setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Start battle!&emsp;
+        <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          /></Button>)
       }
       catch (err) {
         console.error(err);
@@ -86,7 +96,6 @@ function PlayQuest() {
     <div className="d-grid">
       {playButton}
 
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Battle Report</Modal.Title>
@@ -128,6 +137,15 @@ function PlayQuest() {
             <Badge bg={battleResult.isPlayerWinner == "1" ? "success" : "danger"}>
               {battleResult.isPlayerWinner == "1" ? "Player Wins!" : "Enemy Wins"}
             </Badge>
+            <center><h5>
+            <Figure>
+              <Figure.Image
+                width={60}
+                alt="treasure chest"
+                src="/img/treasure-chest.png"
+              />
+            </Figure>
+            &emsp;Reward: {battleResult.isPlayerWinner == "1" ? "80" : "20"} Gold</h5></center>
           </div>
 
         </Modal.Body>

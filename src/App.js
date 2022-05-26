@@ -22,10 +22,10 @@ export default function App() {
         <Col>
           <DisplayUserSquad />
         </Col>
-        <Col xs={8}>
+        <Col xs={6}>
           <Row>
             <Col></Col>
-            <Col xs={3}>
+            <Col xs={4}>
               <Image src="/img/cross-swords.png" fluid />
             </Col>
             <Col></Col>

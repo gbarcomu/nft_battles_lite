@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,9 +6,9 @@ import { RemoveFatigue } from './RemoveFatigue';
 function FeedSquad() {
 
     return (
-        <Container>
+        <div class="p-4">
             <Row>
-                <center><h5 class="pt-4"> Inn</h5></center>
+                <center><h5> Inn</h5></center>
                 <Col></Col>
                 <Col xs={12} sm={10} md={8}>
                     <Image src="/img/beer-mug.png" fluid />
@@ -17,10 +16,12 @@ function FeedSquad() {
                 <Col>
                 </Col>
             </Row>
+            <div className="d-grid">
             <RemoveFatigue />
+            </div>
             <Row>
             </Row>
-        </Container>
+        </div>
     )
 }
 

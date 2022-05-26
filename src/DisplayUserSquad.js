@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -18,13 +17,16 @@ function DisplayUserSquad() {
             fetchSquad().then(data => {
                 console.log(data);
                 if (data !== undefined && data !== null) {
-                    setUserSquad(composeSquad(data));
+                    setUserSquad(
+                        <Col xs={10} sm={8} md={6}>
+                            {composeSquad(data)}
+                        </Col>)
                 }
                 else {
                     setUserSquad(
-                        <div>
+                        <Col xs={12} sm={10} md={8}>
                             <Image src="/img/blacksmith.png" fluid />
-                        </div>
+                        </Col>
                     );
                     setMintButton(<MintSquad />)
                 }
@@ -32,9 +34,9 @@ function DisplayUserSquad() {
         }
         catch (err) {
             setUserSquad(
-                <div>
+                <Col xs={12} sm={10} md={8}>
                     <Image src="/img/blacksmith.png" fluid />
-                </div>
+                </Col>
             );
             setMintButton(<MintSquad />)
         }
@@ -59,19 +61,17 @@ function DisplayUserSquad() {
     }
 
     return (
-        <Container>
+        <div class="p-4">
             <Row>
-                <center><h5 class="pt-4"> Barracks</h5></center>
+                <center><h5> Barracks</h5></center>
                 <Col></Col>
-                <Col xs={12} sm={10} md={8}>
-                    {userSquad}
-                </Col>
+                {userSquad}
                 <Col></Col>
             </Row>
             <Row>
                 {mintButton}
             </Row>
-        </Container>
+        </div>
     )
 }
 

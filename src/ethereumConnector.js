@@ -18,8 +18,6 @@ export async function loadEthereumAccount() {
 
 export async function loadEthereumChainId() {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' })
-    console.log("hola");
-    console.log(chainId);
     return chainId;
 }
 
