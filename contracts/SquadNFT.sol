@@ -14,7 +14,7 @@ contract SquadNFT is ERC721Enumerable, Ownable, PseudoRandomSquadGenerator {
         pendingWithdrawal = 0;
     }
 
-    uint256 private mintPrice = 5 ether;
+    uint256 private mintPrice = 0.05 ether;
     uint32 private tokenCounter;
     uint256 public pendingWithdrawal;
     mapping(uint32 => bytes4) tokenToSquad;
