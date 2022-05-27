@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import { mintSquad, loadEthereumChainId } from './ethereumConnector.js';
+import { mintSquad, loadEthereumChainId, loadEthereumAccount } from './ethereumConnector.js';
 import { useState, useEffect } from 'react';
 import { CHAIN_ID } from './Constants';
 
@@ -12,7 +12,14 @@ function MintSquad() {
     try {
       loadEthereumChainId().then(chainid => {
         if (chainid === CHAIN_ID) {
-          setMintButton(<Button variant="dark" onClick={handleClick}>Mint a squad to play</Button>);
+          loadEthereumAccount().then(acc => {
+            if (acc !== undefined) {
+              setMintButton(<Button variant="dark" onClick={handleClick}>Mint a squad to play</Button>);
+            }
+            else {
+              setMintButton(<Button variant="dark" onClick={handleClick} disabled>Mint a squad to play</Button>);
+            }
+          })
         }
         else {
           setMintButton(<Button variant="dark" onClick={handleClick} disabled>Mint a squad to play</Button>);

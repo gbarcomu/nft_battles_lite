@@ -1,52 +1,18 @@
-import Image from 'react-bootstrap/Image';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import { Menu } from './Menu';
-import { PlayQuest } from './PlayQuest';
-import { DisplayUserSquad } from './DisplayUserSquad';
-import { FeedSquad } from './FeedSquad';
-import { loadEthereumChainId, switchNetwork } from './ethereumConnector.js';
-import { useEffect } from 'react';
+import { isMetaMaskInstalled } from './ethereumConnector.js';
+import { useEffect, useState } from 'react';
+
+import { NFTSquadGame } from './NFTSquadGame';
+import { NoMetamask } from './NoMetamask'
 
 export default function App() {
 
+  const [dAppDAppnt, setDAppDappnt] = useState(<div></div>);
+
   useEffect(() => {
-    loadEthereumChainId();
-    switchNetwork();
+    setDAppDappnt(isMetaMaskInstalled() ? <NFTSquadGame /> : <NoMetamask />);
   }, []);
 
-  window.ethereum.on('networkChanged', function(){
-    window.location.reload();
-  });
-  window.ethereum.on('disconnect', function(){
-    // TODO
-  });
-
-  return (
-    <div>
-      <Menu />
-      <Row>
-        <Col>
-          <DisplayUserSquad />
-        </Col>
-        <Col xs={6}>
-          <Row>
-            <Col></Col>
-            <Col xs={4}>
-              <Image src="/img/cross-swords.png" fluid />
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <PlayQuest />
-          </Row>
-        </Col>
-        <Col>
-          <FeedSquad />
-        </Col>
-      </Row>
-    </div>
-  );
+  return (dAppDAppnt);
 }
 
 

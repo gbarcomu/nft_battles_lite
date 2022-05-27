@@ -43,7 +43,7 @@ function PlayQuest() {
               enemySquad: [val.logs[1].data.substr(2, 2), val.logs[1].data.substr(4, 2), val.logs[1].data.substr(6, 2)],
               battleNumbers: [parseInt(val.logs[2].data.substr(64, 2), 16), parseInt(val.logs[2].data.substr(128, 2), 16), parseInt(val.logs[2].data.substr(192, 2), 16)],
               battleWinners: [val.logs[3].data.substr(65, 1), val.logs[3].data.substr(129, 1), val.logs[3].data.substr(193, 1)],
-              isPlayerWinner: [val.logs[4].data.substr(65, 1)]
+              isPlayerWinner: val.logs[4].data.substr(65, 1) === "1"
             });
             handleShow();
           }

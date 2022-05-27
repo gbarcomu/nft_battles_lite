@@ -39,6 +39,8 @@ function HowToPlay() {
           <p>Q - What's the usage of gold?</p>
           <p>A- At this very moment it's just yet another pointless ERC-20 token, but I have tons of ideas for the future - e.g. the possibility of depositing it into a vault and earning a 20% APY (pun intended) -. Stay tuned for updates!</p>
 
+          <h6>Source code <a href="https://github.com/gbarcomu/nft_battles_lite" target="_blank" rel="noreferrer">here</a></h6>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Close</Button>

@@ -4,6 +4,11 @@ import QuestManager from './artifacts/contracts/QuestManager.sol/QuestManager.js
 import LootToken from './artifacts/contracts/LootToken.sol/LootToken.json'
 import { NFT_SQUAD_ADDRESS, QUEST_MANAGER_ADDRESS, LOOT_TOKEN_ADDRESS, MINT_PRICE, MEAL_PRICE, CHAIN_ID, CHAIN_NAME, RPC_URL} from './Constants'
 
+export function isMetaMaskInstalled() {
+    const { ethereum } = window;
+    return Boolean(ethereum && ethereum.isMetaMask);
+  };
+
 export async function loadEthereumRequestAccount() {
     const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
     return account;
@@ -60,6 +65,7 @@ export async function mintSquad() {
     }
     catch (err) {
         console.error(err);
+        window.location.reload();
     }
 }
 
@@ -120,6 +126,7 @@ export async function playQuest() {
 
     } catch (err) {
         console.error(err)
+        window.location.reload();
     }
 }
 
@@ -137,5 +144,6 @@ export async function removeBattleFatigue() {
 
     } catch (err) {
         console.error(err)
+        window.location.reload();
     }
 }
