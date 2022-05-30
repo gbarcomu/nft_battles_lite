@@ -21,7 +21,7 @@ function HowToPlay() {
 
       <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton>
-          <Modal.Title>Wellcome to NFT squad battles</Modal.Title>
+          <Modal.Title>Welcome to NFT squad battles</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -31,7 +31,7 @@ function HowToPlay() {
           <p>For the fight, 3 (pseudo) random enemy units will pop up and will fight against your squad. Each unit of your squad will be fighting with one enemy unit. It could be a favourable, neutral, or unfavourable fight according to the following rules:</p>
           <p>&emsp; - Swordsman beats lancer, lancer beats knight, and knight beats swordsman, easy right?</p>
           <p>One (pseudo) random number will be generated for each fight. You need to score a 30/50/70 or more to be victorious. <b>Win 2 or more individual fights for winning the battle</b>. You'll be rewarded with <b>80 units of gold if you win or 20 if you lose</b>.</p>
-          <p>After a battle your squad will be exhausted and they will need some rest but, here are some good news, you can <b>purchase a meal</b> for them (only 1 Matic) - the button on the right - and they'll be <b>ready for the next battle</b> right away!</p>
+          <p>After a battle your squad will be exhausted and they will need some rest but, here are some good news, you can <b>purchase a meal</b> for them (only <b>1 Matic</b>) - the button on the right - and they'll be <b>ready for the next battle</b> right away!</p>
 
           <h5>FAQ</h5>
           <p>Q - Is this just heads or tails with more steps?</p>
