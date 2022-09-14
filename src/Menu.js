@@ -41,7 +41,7 @@ function Menu() {
               width="40"
               height="40"
               className="d-inline-block align-top"
-              alt="gold icon"
+              alt="polygon logo"
             />)
         }
         else {
@@ -66,7 +66,7 @@ function Menu() {
             width="40"
             height="40"
             className="d-inline-block align-top"
-            alt="gold icon"
+            alt="money bag"
           />
           <Navbar.Text>
             <PlayerTokenBalance />
