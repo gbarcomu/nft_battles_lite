@@ -3,6 +3,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { RemoveFatigue } from './RemoveFatigue';
 
+import beerMug_img from './img/beer-mug.png';
+
 function FeedSquad() {
 
     return (
@@ -11,7 +13,7 @@ function FeedSquad() {
                 <center><h5> Inn</h5></center>
                 <Col></Col>
                 <Col xs={12} sm={10} md={8}>
-                    <Image src="/img/beer-mug.png" fluid />
+                    <Image src={beerMug_img} fluid />
                 </Col>
                 <Col>
                 </Col>

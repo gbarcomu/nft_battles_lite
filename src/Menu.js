@@ -9,6 +9,8 @@ import { CHAIN_ID } from './Constants';
 
 import { loadEthereumAccount, loadEthereumRequestAccount, loadEthereumChainId } from './ethereumConnector.js';
 
+import polygon_img from './img/polygon.png';
+import moneyBag_img from './img/money-bag.png';
 
 function Menu() {
 
@@ -35,7 +37,7 @@ function Menu() {
         if (chainid === CHAIN_ID) {
           setCurrentChain(
             <img
-              src="/img/polygon.png"
+              src={polygon_img}
               width="40"
               height="40"
               className="d-inline-block align-top"
@@ -60,7 +62,7 @@ function Menu() {
       <Container>
         <Nav className="me-auto">
           <img
-            src="/img/money-bag.png"
+            src={moneyBag_img}
             width="40"
             height="40"
             className="d-inline-block align-top"
