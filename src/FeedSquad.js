@@ -13,7 +13,7 @@ function FeedSquad() {
                 <center><h5> Inn</h5></center>
                 <Col></Col>
                 <Col xs={12} sm={10} md={8}>
-                    <Image src={beerMug_img} fluid />
+                    <Image src={beerMug_img} alt="beer mug" fluid />
                 </Col>
                 <Col>
                 </Col>

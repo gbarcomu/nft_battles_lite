@@ -29,7 +29,7 @@ function DisplayUserSquad() {
                 else {
                     setUserSquad(
                         <Col xs={12} sm={10} md={8}>
-                            <Image src={blacksmith_img} fluid />
+                            <Image src={blacksmith_img} alt="blacksmith" fluid />
                         </Col>
                     );
                     setMintButton(<MintSquad />)
@@ -39,7 +39,7 @@ function DisplayUserSquad() {
         catch (err) {
             setUserSquad(
                 <Col xs={12} sm={10} md={8}>
-                    <Image src="/img/blacksmith.png" fluid />
+                    <Image src={blacksmith_img} alt="blacksmith" fluid />
                 </Col>
             );
             setMintButton(<MintSquad />)
@@ -49,9 +49,9 @@ function DisplayUserSquad() {
 
     function composeSquad(bytesSquad) {
 
-        const characters = [<Image src={swordsman_img} fluid />,
-        <Image src={lancer_img} fluid />,
-        <Image src={knight_img} fluid />];
+        const characters = [<Image src={swordsman_img} alt="swordsman" fluid />,
+        <Image src={lancer_img} alt="lancer" fluid />,
+        <Image src={knight_img} alt="knight" fluid />];
 
         const imgSquad = bytesSquad.split("").slice(2, 12).map((e, i) => {
             if (i % 2 !== 0) {

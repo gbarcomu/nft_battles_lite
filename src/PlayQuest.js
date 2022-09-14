@@ -69,9 +69,9 @@ function PlayQuest() {
   }, []);
 
   function numToImg(index) {
-    const characters = [<Image src={swordsman_img} fluid />,
-    <Image src={lancer_img} fluid />,
-    <Image src={knight_img} fluid />];
+    const characters = [<Image src={swordsman_img} alt="swordsman" fluid />,
+    <Image src={lancer_img} alt="lancer" fluid />,
+    <Image src={knight_img} alt="knight" fluid />];
     return (
       <Row>
         <Col></Col>

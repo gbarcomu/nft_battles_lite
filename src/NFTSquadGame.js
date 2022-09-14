@@ -35,7 +35,7 @@ function NFTSquadGame() {
           <Row>
             <Col></Col>
             <Col xs={4}>
-              <Image src={crossSwords_img} fluid />
+              <Image src={crossSwords_img} alt="cross swords" fluid />
             </Col>
             <Col></Col>
           </Row>
