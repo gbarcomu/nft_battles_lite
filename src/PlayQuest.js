@@ -29,7 +29,7 @@ function PlayQuest() {
         getPlayerRemainingTime().then((val) => {
           val = val === undefined ? 0 : val.toNumber();
           if (val !== 0) {
-            setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Your squad is faitgued and need to rest for <Timer /> seconds</Button>)
+            setPlayButton(<Button variant="dark" onClick={handleClick} disabled>Your squad is fatigued and need to rest for <Timer /> seconds</Button>)
           }
           else {
             setPlayButton(<Button variant="dark" onClick={handleClick}>Start battle!</Button>)
