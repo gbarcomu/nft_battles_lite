@@ -11,6 +11,11 @@ import Figure from 'react-bootstrap/Figure';
 import { Timer } from './Timer';
 import { useEffect, useState } from 'react';
 
+import treasureChest_img from './img/treasure-chest.png';
+import swordsman_img from './img/swordsman.png';
+import lancer_img from './img/lancer.png';
+import knight_img from './img/knight.png';
+
 function PlayQuest() {
 
   const [playButton, setPlayButton] = useState();
@@ -64,9 +69,9 @@ function PlayQuest() {
   }, []);
 
   function numToImg(index) {
-    const characters = [<Image src="/img/swordsman.png" fluid />,
-    <Image src="/img/lancer.png" fluid />,
-    <Image src="/img/knight.png" fluid />];
+    const characters = [<Image src={swordsman_img} fluid />,
+    <Image src={lancer_img} fluid />,
+    <Image src={knight_img} fluid />];
     return (
       <Row>
         <Col></Col>
@@ -144,7 +149,7 @@ function PlayQuest() {
                 <Figure.Image
                   width={60}
                   alt="treasure chest"
-                  src="/img/treasure-chest.png"
+                  src={treasureChest_img}
                 />
               </Figure>
             &emsp;Reward: {battleResult.isPlayerWinner ? "80" : "20"} Gold</h5></center>

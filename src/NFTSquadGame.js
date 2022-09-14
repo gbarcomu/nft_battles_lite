@@ -8,6 +8,8 @@ import { FeedSquad } from './FeedSquad';
 import { loadEthereumChainId, switchNetwork } from './ethereumConnector.js';
 import { useEffect } from 'react';
 
+import crossSwords_img from './img/cross-swords.png';
+
 function NFTSquadGame() {
 
   useEffect(() => {
@@ -33,7 +35,7 @@ function NFTSquadGame() {
           <Row>
             <Col></Col>
             <Col xs={4}>
-              <Image src="/img/cross-swords.png" fluid />
+              <Image src={crossSwords_img} fluid />
             </Col>
             <Col></Col>
           </Row>
